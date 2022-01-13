@@ -1,4 +1,5 @@
 # Disturbuted Calculator
+[![cli-build](https://github.com/yusufcanb/mqtt-calculator/actions/workflows/docker-image.yml/badge.svg?branch=master)](https://github.com/yusufcanb/mqtt-calculator/actions/workflows/docker-image.yml)
 
 This project aims to perform basic arithmetic operations with pub/sub pattern.
 
