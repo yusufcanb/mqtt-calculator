@@ -1,0 +1,35 @@
+version: "3"
+services:
+  mqtt-broker:
+    build:
+      dockerfile: Dockerfile
+      context: ./broker
+    container_name: mqtt-broker
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+
+  calculator-service:
+    build:
+      dockerfile: Dockerfile
+      context: ./service
+    container_name: calculator-service
+    depends_on:
+      - mqtt-broker
+    environment:
+      MQTT_BROKER_HOST: mqtt-broker
+      MQTT_BROKER_PORT: 1883
+      CALCULATION_REQUEST_TOPIC: calculator/calc
+      CALCULATION_RESULT_TOPIC: calculator/result
+
+  calculator-ui:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: calculator-ui
+    hostname: nginx
+    restart: on-failure
+    ports:
+      - "3000:80"
+    depends_on:
+      - calculator-service
